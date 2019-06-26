@@ -1,4 +1,7 @@
 {
   "name": "object-detection",
-  "type": "ml-script"
+  "type": "ml-script",
+  "authors": [
+    "QmbqeosypGVQC1QtbuxD9UZaqrpvJBh9P4nSvwrRm9dYV3"
+  ]
 }
