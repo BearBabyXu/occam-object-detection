@@ -1,9 +1,7 @@
 {
   "name": "object-detection",
   "type": "ml-script",
-  "authors": [
-    "QmbqeosypGVQC1QtbuxD9UZaqrpvJBh9P4nSvwrRm9dYV3"
-  ],
+  "authors": ["QmbqeosypGVQC1QtbuxD9UZaqrpvJBh9P4nSvwrRm9dYV3"],
   "architecture": "x86-64",
   "environment": "linux",
   "inputs":[
@@ -32,7 +30,7 @@
   "run": {
     "command": [
       "/usr/bin/python3",
-      "{{ paths.mount }}/object_detection.py"
+      "{{ paths.mount }}/launcher.py"
     ],
     "dependencies": [
       {
