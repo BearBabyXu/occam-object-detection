@@ -1,3 +1,11 @@
+import subprocess
+import sys
+
+print("Hack --- Installing dependencies")
+subprocess.call([sys.executable, "-m", "pip", "install", "pillow"])
+subprocess.call([sys.executable, "-m", "pip", "install", "pandas"])
+print("Hack --- Dependencies successfully installed")
+
 from PIL import Image, ImageFont, ImageDraw
 
 import os
@@ -6,6 +14,25 @@ import numpy as np
 from pathlib import Path
 from ai.object_detection import CocoDetectorAPI
 import pandas as pd
+import json
+
+output_file = os.path.join(
+    "..",
+    "outputs",
+    "0",
+    "0"
+)
+
+print(" --- Collecting paths ---")
+with open("../task.json") as f:
+    manifest = json.load(f)
+    try:
+        model_path = manifest['inputs'][0]['connections'][0]['file']
+        images_path = manifest['inputs'][1]['connections'][0]['file']
+    except (KeyError, IndexError) as e:
+        input_path = None
+print("Model path is: {}".format(model_path))
+print("Images folder is: {}".format(images_path))
 
 
 def object_detection(cod, img_base_path, target, hd_threshold=0.7):
@@ -42,20 +69,20 @@ if __name__ == "__main__":
 
     print("--- Initiating Object Detection ---")
 
-    parser = argparse.ArgumentParser()
+    # parser = argparse.ArgumentParser()
+    #
+    # parser.add_argument("--od_m", type=str, required=True)
+    # parser.add_argument("--od_thres", type=float, required=True)
+    # parser.add_argument("--od_target", type=str, required=True)
+    # parser.add_argument("--images", type=str, required=True)
+    # parser.add_argument("--results", type=str, required=True)
+    # args = parser.parse_args()
 
-    parser.add_argument("--od_m", type=str, required=True)
-    parser.add_argument("--od_thres", type=float, required=True)
-    parser.add_argument("--od_target", type=str, required=True)
-    parser.add_argument("--images", type=str, required=True)
-    parser.add_argument("--results", type=str, required=True)
-    args = parser.parse_args()
+    print("Loading images from: " + images_path)
+    images = Path(images_path).glob("*.jpg")
 
-    print("Loading images from: " + args.images)
-    images = Path(args.images).glob("*.jpg")
-
-    print("Loading model from: " + args.od_m)
-    cod_api = CocoDetectorAPI(args.od_m)
+    print("Loading model from: " + model_path)
+    cod_api = CocoDetectorAPI(model_path)
 
     for image in images:
 
@@ -63,16 +90,16 @@ if __name__ == "__main__":
 
         image_with_det, image_data_df = object_detection(cod_api,
                                                          str(image),
-                                                         int(args.od_target),
-                                                         float(args.od_thres))
+                                                         int(1),
+                                                         float(0.7))
 
         image_det_path = os.path.join(
-            args.results,
+            output_file,
             "{}_tagged.jpg".format(image_name)
         )
 
         results_path = os.path.join(
-            args.results,
+            output_file,
             "{}_data.pkl".format(image_name)
         )
 

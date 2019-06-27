@@ -8,25 +8,9 @@ subprocess.call([sys.executable, "-m", "pip", "install", "pillow"])
 subprocess.call([sys.executable, "-m", "pip", "install", "pandas"])
 print("Hack --- Dependencies successfully installed")
 
-output_file = os.path.join(
-    "..",
-    "outputs",
-    "0",
-    "0"
-)
 
-print(" --- Collecting paths ---")
-with open("../task.json") as f:
-    manifest = json.load(f)
-    try:
-        model_path = manifest['inputs'][0]['connections'][0]['file']
-        images_path = manifest['inputs'][1]['connections'][0]['file']
-    except (KeyError, IndexError) as e:
-        input_path = None
-print("Model path is: {}".format(model_path))
-print("Images folder is: {}".format(images_path))
 
-args = [sys.executable, "./object_detection.py",
+args = [sys.executable, "./detect_objects.py",
                         "--od_m", model_path,
                         "--images", images_path,
                         "--results", output_file,

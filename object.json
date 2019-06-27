@@ -21,16 +21,17 @@
   ],
   "outputs": [
     {
-      "name": "tagged_images",
+      "name": "tagged_imagess",
       "type": "image",
       "file_type": "jpeg",
       "subtype": "image/jpeg"
     }
   ],
+
   "run": {
     "command": [
       "/usr/bin/python3",
-      "{{ paths.mount }}/launcher.py"
+      "{{ paths.mount }}/detect_objects.py"
     ],
     "dependencies": [
       {
