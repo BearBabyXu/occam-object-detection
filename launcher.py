@@ -27,10 +27,10 @@ print("Model path is: {}".format(model_path))
 print("Images folder is: {}".format(images_path))
 
 
-subprocess.call([sys.executable, "object_detection.py",
-                 "--od_m", model_path,
-                 "--images", images_path,
-                 "--results", output_file,
-                 "--od_thres", "0.7",
-                 "--od_target", "1"])
+os.execvp("object_detection.py",
+          ["--od_m", model_path,
+           "--images", images_path,
+           "--results", output_file,
+           "--od_thres", "0.7",
+           "--od_target", "1"])
 

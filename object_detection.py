@@ -40,6 +40,8 @@ def tag_detections(img, obj_boxes, scores):
 
 if __name__ == "__main__":
 
+    print("--- Initiating Object Detection ---")
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--od_m", type=str, required=True)
@@ -49,8 +51,10 @@ if __name__ == "__main__":
     parser.add_argument("--results", type=str, required=True)
     args = parser.parse_args()
 
+    print("Loading images from: " + args.images)
     images = Path(args.images).glob("*.jpg")
 
+    print("Loading model from: " + args.od_m)
     cod_api = CocoDetectorAPI(args.od_m)
 
     for image in images:
@@ -71,6 +75,9 @@ if __name__ == "__main__":
             args.results,
             "{}_data.pkl".format(image_name)
         )
+
+        print("Saving tagged image to: " + image_det_path)
+        print("Saving data to: " + results_path)
 
         # save in new file
         image_with_det.save(image_det_path, "JPEG")
