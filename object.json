@@ -3,5 +3,57 @@
   "type": "ml-script",
   "authors": [
     "QmbqeosypGVQC1QtbuxD9UZaqrpvJBh9P4nSvwrRm9dYV3"
-  ]
+  ],
+  "architecture": "x86-64",
+  "environment": "linux",
+  "inputs":[
+    {
+      "name": "cnn model",
+      "type": "CNN",
+      "file_type": "pb",
+      "subtype": "application/pb"
+    },
+    {
+      "name": "images",
+      "type": "image",
+      "file_type": "jpeg",
+      "subtype": "image/jpeg",
+      "file": "/images"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "tagged_images",
+      "type": "image",
+      "file_type": "jpeg",
+      "subtype": "image/jpeg"
+    }
+  ],
+  "run": {
+    "command": [
+      "/usr/bin/python3",
+      "{{ paths.mount }}/object_detection.py"
+    ],
+    "dependencies": [
+      {
+        "type": "language",
+        "name": "python",
+        "id": "QmRt6cEP2MsyxaAvyzHCH9FFwCn3NAtLRzbJdW4tVPBkSV",
+        "version": ">=3.6"
+      },
+      {
+       "name": "bash",
+       "type": "language",
+       "id": "QmUpBXwVhGpWzaKToh6jxQJQxGbJvZQxFWJ16nHK5WXsWd",
+       "version": "4.4"
+      },
+      {
+       "name": "numpy",
+       "type": "python-library",
+       "id": "QmX8fe1jBgfp6m4WrLFxM2ppKbVG8zNJTVfxS4maUQq4DB",
+       "version": "1.15.4"
+      }
+    ],
+    "install": []
+  }
 }
