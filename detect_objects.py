@@ -1,10 +1,11 @@
 import subprocess
 import sys
 
-print("Hack --- Installing dependencies")
+print("[Hack] --- Installing dependencies")
 subprocess.call([sys.executable, "-m", "pip", "install", "pillow"])
 subprocess.call([sys.executable, "-m", "pip", "install", "pandas"])
-print("Hack --- Dependencies successfully installed")
+subprocess.call([sys.executable, "-m", "pip", "install", "tensorflow"])
+print("[Hack] --- Dependencies successfully installed")
 
 from PIL import Image, ImageFont, ImageDraw
 
@@ -23,7 +24,7 @@ output_file = os.path.join(
     "0"
 )
 
-print(" --- Collecting paths ---")
+print("[INFO] --- Collecting paths ---")
 with open("../task.json") as f:
     manifest = json.load(f)
     try:
@@ -31,8 +32,8 @@ with open("../task.json") as f:
         images_path = manifest['inputs'][1]['connections'][0]['file']
     except (KeyError, IndexError) as e:
         input_path = None
-print("Model path is: {}".format(model_path))
-print("Images folder is: {}".format(images_path))
+print("[INFO] Model path is: {}".format(model_path))
+print("[INFO] Images folder is: {}".format(images_path))
 
 
 def object_detection(cod, img_base_path, target, hd_threshold=0.7):
@@ -78,10 +79,10 @@ if __name__ == "__main__":
     # parser.add_argument("--results", type=str, required=True)
     # args = parser.parse_args()
 
-    print("Loading images from: " + images_path)
+    print("[INFO] Loading images from: " + images_path)
     images = Path(images_path).glob("*.jpg")
 
-    print("Loading model from: " + model_path)
+    print("[INFO] Loading model from: " + model_path)
     cod_api = CocoDetectorAPI(model_path)
 
     for image in images:
@@ -103,8 +104,8 @@ if __name__ == "__main__":
             "{}_data.pkl".format(image_name)
         )
 
-        print("Saving tagged image to: " + image_det_path)
-        print("Saving data to: " + results_path)
+        print("[INFO] Saving tagged image to: " + image_det_path)
+        print("[INFO] Saving data to: " + results_path)
 
         # save in new file
         image_with_det.save(image_det_path, "JPEG")
