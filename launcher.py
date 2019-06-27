@@ -26,7 +26,7 @@ with open("../task.json") as f:
 print("Model path is: {}".format(model_path))
 print("Images folder is: {}".format(images_path))
 
-args = [sys.executable, "object_detection.py",
+args = [sys.executable, "./object_detection.py",
                         "--od_m", model_path,
                         "--images", images_path,
                         "--results", output_file,
